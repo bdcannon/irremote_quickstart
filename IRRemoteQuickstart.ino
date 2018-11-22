@@ -2,7 +2,7 @@
 #include "IRMap.h"
 #include <IRremote.h>
 
-int recvPin = 3;
+int recvPin = 11;
 IRrecv irrecv(recvPin);
 
 void setup() {
@@ -16,8 +16,17 @@ void loop() {
   decode_results results;
 
   if(irrecv.decode(&results)){
-    Serial.println(IRMap::code_map(results.value));
-    delay(50);
+    String buttonPressed = IRMap::code_map(results.value);
+
+    if(buttonPressed == "POWER") {
+      Serial.println("Put stuff here to run when the Power button is pressed");  
+    }
+
+    if(buttonPressed == "PLAY"){
+      Serial.println("Put things here for when PLAY is pressed");
+    }
+    
+    delay(100);
     irrecv.resume();
   }
 }
